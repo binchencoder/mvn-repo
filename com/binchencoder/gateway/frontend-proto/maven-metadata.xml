@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metadata>
+  <groupId>com.binchencoder.gateway</groupId>
+  <artifactId>frontend-proto</artifactId>
+  <versioning>
+    <versions>
+      <version>1.0-SNAPSHOT</version>
+    </versions>
+    <lastUpdated>20191023093222</lastUpdated>
+  </versioning>
+</metadata>
