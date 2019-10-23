@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metadata modelVersion="1.1.0">
+  <groupId>com.binchencoder.gateway</groupId>
+  <artifactId>gateway-proto</artifactId>
+  <version>1.0-SNAPSHOT</version>
+  <versioning>
+    <snapshot>
+      <timestamp>20191023.092505</timestamp>
+      <buildNumber>1</buildNumber>
+    </snapshot>
+    <lastUpdated>20191023092505</lastUpdated>
+    <snapshotVersions>
+      <snapshotVersion>
+        <extension>pom</extension>
+        <value>1.0-20191023.092505-1</value>
+        <updated>20191023092505</updated>
+      </snapshotVersion>
+    </snapshotVersions>
+  </versioning>
+</metadata>
