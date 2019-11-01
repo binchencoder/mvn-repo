@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
+  xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>com.binchencoder.spring.boot</groupId>
+  <artifactId>spring-boot-grpc-common</artifactId>
+  <version>1.0-SNAPSHOT</version>
+
+  <!-- parent -->
+  <parent>
+    <groupId>com.binchencoder.spring.boot</groupId>
+    <artifactId>spring-boot-grpc-parent</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <relativePath>../pom.xml</relativePath>
+  </parent>
+
+  <properties>
+    <java.version>1.8</java.version>
+    <maven.compiler.source>1.8</maven.compiler.source>
+    <maven.compiler.target>1.8</maven.compiler.target>
+    <maven.compiler.encoding>UTF-8</maven.compiler.encoding>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+    <!-- Prometheus Dependencies Version -->
+    <io.prometheus>0.0.15</io.prometheus>
+
+    <!-- Binchencoder Dependencies Version -->
+    <com.binchencoder.frontend-error-proto.version>1.0-SNAPSHOT</com.binchencoder.frontend-error-proto.version>
+    <com.binchencoder.data-proto.version>1.0-SNAPSHOT</com.binchencoder.data-proto.version>
+	<com.binchencoder.skylb-client.version>1.0</com.binchencoder.skylb-client.version>
+  </properties>
+
+  <dependencies>
+    <!-- Binchencoder Dependencies -->
+    <dependency>
+      <groupId>com.binchencoder.gateway</groupId>
+      <artifactId>frontend-proto</artifactId>
+      <version>${com.binchencoder.frontend-error-proto.version}</version>
+      <exclusions>
+        <exclusion>
+          <artifactId>*</artifactId>
+          <groupId>*</groupId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+    <dependency>
+      <groupId>com.binchencoder.gateway</groupId>
+      <artifactId>data-proto</artifactId>
+      <version>${com.binchencoder.data-proto.version}</version>
+      <exclusions>
+        <exclusion>
+          <artifactId>*</artifactId>
+          <groupId>*</groupId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+  	<dependency>
+	  <groupId>com.binchencoder.skylb</groupId>
+	  <artifactId>skylb-client</artifactId>
+	  <version>${com.binchencoder.skylb-client.version}</version>
+  	</dependency>
+
+    <!-- Spring Dependencies -->
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-configuration-processor</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-autoconfigure</artifactId>
+    </dependency>
+
+    <!-- Prometheus Dependencies -->
+    <dependency>
+      <groupId>io.prometheus</groupId>
+      <artifactId>simpleclient_hotspot</artifactId>
+      <version>${io.prometheus}</version>
+    </dependency>
+  </dependencies>
+</project>
