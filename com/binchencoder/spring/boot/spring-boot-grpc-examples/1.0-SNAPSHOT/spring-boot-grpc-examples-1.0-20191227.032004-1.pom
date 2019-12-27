@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
+	xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>com.binchencoder.spring.boot</groupId>
+	<artifactId>spring-boot-grpc-examples</artifactId>
+	<version>1.0-SNAPSHOT</version>
+
+	<!-- parent -->
+	<parent>
+		<groupId>com.binchencoder.spring.boot</groupId>
+		<artifactId>spring-boot-grpc-parent</artifactId>
+		<version>1.0-SNAPSHOT</version>
+		<relativePath>../pom.xml</relativePath>
+	</parent>
+
+	<properties>
+		<java.version>1.8</java.version>
+		<maven.compiler.source>1.8</maven.compiler.source>
+		<maven.compiler.target>1.8</maven.compiler.target>
+		<maven.compiler.encoding>UTF-8</maven.compiler.encoding>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+		<!--<protoc.version>3.2.0</protoc.version>-->
+
+		<!-- Prometheus Dependencies Version -->
+		<io.prometheus>0.0.15</io.prometheus>
+
+		<!-- Binchencoder Dependencies Version -->
+		<com.binchencoder.spring-boot-grpc.version>1.0-SNAPSHOT</com.binchencoder.spring-boot-grpc.version>
+		<com.binchencoder.frontend-error-proto.version>1.0-SNAPSHOT</com.binchencoder.frontend-error-proto.version>
+		<com.binchencoder.data-proto.version>1.0-SNAPSHOT</com.binchencoder.data-proto.version>
+		<com.binchencoder.examples-proto.version>1.0-SNAPSHOT</com.binchencoder.examples-proto.version>
+	</properties>
+
+	<dependencies>
+		<!-- Binchencoder Dependencies -->
+		<dependency>
+			<groupId>com.binchencoder.spring.boot</groupId>
+			<artifactId>spring-boot-grpc-common</artifactId>
+			<version>${com.binchencoder.spring-boot-grpc.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.binchencoder.gateway</groupId>
+			<artifactId>frontend-proto</artifactId>
+			<version>${com.binchencoder.frontend-error-proto.version}</version>
+			<exclusions>
+				<exclusion>
+					<artifactId>*</artifactId>
+					<groupId>*</groupId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>com.binchencoder.gateway</groupId>
+			<artifactId>data-proto</artifactId>
+			<version>${com.binchencoder.data-proto.version}</version>
+			<exclusions>
+				<exclusion>
+					<artifactId>*</artifactId>
+					<groupId>*</groupId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>com.binchencoder.easegw</groupId>
+			<artifactId>examples-proto</artifactId>
+			<version>${com.binchencoder.examples-proto.version}</version>
+			<exclusions>
+				<exclusion>
+					<artifactId>*</artifactId>
+					<groupId>*</groupId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+
+		<!-- Spring Dependencies -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-configuration-processor</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-autoconfigure</artifactId>
+		</dependency>
+
+		<!-- Prometheus Dependencies -->
+		<dependency>
+			<groupId>io.prometheus</groupId>
+			<artifactId>simpleclient</artifactId>
+			<version>${io.prometheus}</version>
+		</dependency>
+		<dependency>
+			<groupId>io.prometheus</groupId>
+			<artifactId>simpleclient_servlet</artifactId>
+			<version>${io.prometheus}</version>
+		</dependency>
+		<dependency>
+			<groupId>io.prometheus</groupId>
+			<artifactId>simpleclient_hotspot</artifactId>
+			<version>${io.prometheus}</version>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<extensions>
+			<extension>
+				<groupId>kr.motd.maven</groupId>
+				<artifactId>os-maven-plugin</artifactId>
+				<version>1.4.1.Final</version>
+			</extension>
+		</extensions>
+		<plugins>
+			<plugin>
+				<groupId>org.xolstice.maven.plugins</groupId>
+				<artifactId>protobuf-maven-plugin</artifactId>
+				<version>0.5.0</version>
+				<configuration>
+					<!-- The version of protoc must match protobuf-java. If you don't depend
+						on protobuf-java directly, you will be transitively depending on the protobuf-java
+						version that grpc depends on. -->
+					<protocArtifact>com.google.protobuf:protoc:3.2.0:exe:${os.detected.classifier}</protocArtifact>
+					<pluginId>grpc-java</pluginId>
+					<pluginArtifact>io.grpc:protoc-gen-grpc-java:1.2.0:exe:${os.detected.classifier}</pluginArtifact>
+					<protoSourceRoot>./</protoSourceRoot>
+					<includes>
+						<param>gateway-proto/frontend/*.proto</param>
+					</includes>
+				</configuration>
+				<executions>
+					<execution>
+						<goals>
+							<goal>compile</goal>
+							<goal>compile-custom</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-resources-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-failsafe-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-source-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+				<configuration>
+					<archive>
+						<manifest>
+							<addClasspath>true</addClasspath>
+							<classpathMavenRepositoryLayout>true</classpathMavenRepositoryLayout>
+						</manifest>
+					</archive>
+					<excludes>
+						<exclude>application.yml</exclude>
+					</excludes>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<artifactId>maven-assembly-plugin</artifactId>
+				<configuration>
+					<descriptors>
+						<descriptor>src/main/assembly/assembly.xml</descriptor>
+					</descriptors>
+				</configuration>
+				<executions>
+					<execution>
+						<id>make-assembly</id>
+						<phase>package</phase>
+						<goals>
+							<goal>single</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+</project>
